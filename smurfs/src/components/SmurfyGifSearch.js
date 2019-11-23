@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSmurfyData } from "../actions";
+import { getSmurfyGifData } from "../actions";
 
-const SmurfyData = props => {
+const SmurfyGifData = props => {
   return (
     <>
       {/* <input
@@ -13,7 +13,7 @@ const SmurfyData = props => {
       /> */}
       <button
         onClick={() => {
-          props.getSmurfyData();
+          props.getSmurfyGifData();
         }}
       >
         Get Smurf GIFs
@@ -22,9 +22,9 @@ const SmurfyData = props => {
       {props.isLoading ? (
         <div>loading data...</div>
       ) : (
-        props.smurfData.length > 0 && 
+        props.smurfyGifData.length > 0 && 
         <div className="smurfGifResults">
-          {props.smurfData.map(s => (
+          {props.smurfyGifData.map(s => (
             <div className="smurfGif" key={s.id}>
               <a href={s.url} target="_blank" rel="noopener noreferrer">
                 <img
@@ -45,11 +45,11 @@ const mapStateToProps = state => {
   return {
     isLoading: state.isLoading,
     error: state.error,
-    smurfData: state.smurfData
+    smurfyGifData: state.smurfyGifData
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getSmurfyData }
-)(SmurfyData);
+  { getSmurfyGifData }
+)(SmurfyGifData);

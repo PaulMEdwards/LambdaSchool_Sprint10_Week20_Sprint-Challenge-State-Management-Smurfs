@@ -3,31 +3,70 @@
 
   header {
     // height: 150px;
-    padding: 20px;
-    color: white;
-  
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
     .logo {
       height: 100px;
-      // animation: logo-spin infinite 20s linear;
-      
-      // @keyframes logo-spin {
-      //   from { transform: rotate(0deg); }
-      //   to { transform: rotate(360deg); }
-      // }
     }
-  
+
     .title {
       font-size: 1.5em;
     }
-    
-    .intro {
-      font-size: large;
+
+    .Input {
+      input,button {
+        background-color: black;
+        color: darkgrey;
+      }
+      input.inputName {
+        width: 161px;
+      }
+      input.inputAge,input.inputHeight {
+        width: 55px;
+      }
     }
   }
 
-  section.SuperSecretSmurfySearch {
-    display: block;
+  section.Smurf {
+    .smurfDBResults {
+      width: 80%;
+      margin: 0 auto;
 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 0.5rem;
+
+      .smurf {
+        height: 200px;
+        min-width: 200px;
+        
+        // margin: 1em;
+        // padding: 0.5em;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid;
+        border-radius: 5px;
+
+        img.gif {
+          // padding: 5px;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  section.SuperSecretSmurfyGifSearch {
     .smurfGifResults {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(365px, 1fr));
@@ -48,5 +87,9 @@
         }
       }
     }
+  }
+
+  .hide {
+    display: none;
   }
 }

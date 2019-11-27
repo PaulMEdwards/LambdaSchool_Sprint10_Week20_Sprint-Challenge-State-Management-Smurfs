@@ -1,89 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-// import { getSmurfData, ADD_SMURF /*, REMOVE_SMURF*/ } from "../actions";
 
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-// import { faUserEdit, faUserTimes } from '@fortawesome/free-solid-svg-icons';
-
-// library.add(faEdit, faTrashAlt, faUserEdit, faUserTimes);
-
-const SmurfForm = props => {
-//#region smurfHeight formatting function
-  // const smurfHeight = (heightValue) => {
-  //   console.log(`smurfHeight input parameter type: "${typeof(heightValue)}", value: "${heightValue}".`);
-
-  //   let h = '';
-
-  //   switch (typeof(heightValue)) {
-  //     case "number":
-  //       if (heightValue === 0) {
-  //         h = '';
-  //       } else if (heightValue > 0) {
-  //         h = heightValue.toString()+'cm';
-  //       // } else {
-  //       //   console.log(`smurfHeight parameter "${heightValue}" must be greater than 0.`);
-  //       }
-  //       break;
-  //     case "string":
-  //       if (heightValue.length > 0) {
-  //         if(!heightValue.endsWith('cm')) {
-  //           heightValue = heightValue+'cm';
-  //         }
-  //         h = heightValue;
-  //       // } else {
-  //       //   console.log(`smurfHeight parameter is an empty string which is not permitted. It must be a numeric value (stored as string is OK) greater than 0 and ending in 'cm'. Example: '7.5cm'`);
-  //       }
-  //       break;
-  //     default:
-  //       console.log(`smurfHeight parameter "${heightValue}" type "${typeof(heightValue)}" is not supported. Must be a decimal value greater than 0 or equivalent as string.`);
-  //   }
-
-  //   console.log(`smurfHeight output parameter type: "${typeof(h)}", value: "${h}".`);
-
-  //   return h;
-  // }
-//#endregion smurfHeight formatting function
-
-  const newSmurfObject = (nameValue='', ageValue='', heightValue='') => {
+const SmurfForm = (props) => {
+  //#region data
+  const newSmurfObject = (nameValue='', ageValue=0, heightValue=0) => {
     return {
       name: nameValue,
       age: ageValue,
-      // height: smurfHeight(heightValue)
       height: heightValue
     };
   }
+
   const defaultSmurf = newSmurfObject();
-  
+
   const [newSmurf, setNewSmurf] = useState(defaultSmurf);
+  //#endregion data
 
-  const handleChanges = e => {
-    // console.log('SmurfForm handleChanges newSmurf: ', newSmurf);
-    if ((e.target.name === 'age' || e.target.name === 'height') && (e.target.value === 0)) {
-      e.target.value = '';
-    }
-    // if (e.target.name === 'height') {
-    //   setNewSmurf({ ...newSmurf, [e.target.name]: smurfHeight(e.target.value) });
-    // } else {
-      setNewSmurf({ ...newSmurf, [e.target.name]: e.target.value });
-    // }
-  };
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   console.log('SmurfForm handleSubmit e: ', e);
-  //   console.log('add newSmurf: ', newSmurf);
-  //   addSmurf(newSmurf);
-  //   setNewSmurf(defaultSmurf);
-  // };
 
+  //#region useEffect monitor(s)
   useEffect(() => {
     console.log('SmurfForm props:', props);
   }, [props]);
+
   useEffect(() => {
-    console.log('SmurfForm newSmurf: ', newSmurf);
+    // console.log('SmurfForm newSmurf: ', newSmurf);
   }, [newSmurf]);
 
+  useEffect(() => {
+    console.log("Loading Smurfy sample data...");
+    props.addSmurf(newSmurfObject("Grandpa", 1000, 4.8));
+    props.addSmurf(newSmurfObject("Papa", 500, 5.0));
+    props.addSmurf(newSmurfObject("Lazy", 201, 4.9));
+    props.addSmurf(newSmurfObject("Jokey", 202, 5.1));
+    props.addSmurf(newSmurfObject("Clumsy", 203, 5.2));
+    props.addSmurf(newSmurfObject("Hefty", 204, 4.9));
+    props.addSmurf(newSmurfObject("Smurfette", 205, 5.2));
+    props.addSmurf(newSmurfObject("Harmony", 206, 4.7));
+    props.addSmurf(newSmurfObject("Sassette", 25, 4.0));
+  }, []);
+  //#endregion useEffect monitor(s)
+
+
+  //#region event handler(s)
+  const handleChanges = (e) => {
+    setNewSmurf({ ...newSmurf, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    if (newSmurf.name !== '' && 
+        newSmurf.age !== '' && newSmurf.age !== 0 && 
+        newSmurf.height !== '' && newSmurf.height !== 0) {
+      console.log('SmurfForm newSmurf: ', newSmurf);
+      props.addSmurf(newSmurf);
+      setNewSmurf(defaultSmurf);
+    }
+  };
+  //#endregion event handler(s)
+
+
+  //#region JSX
   return (
     <div className="Input">
       <input
@@ -92,7 +66,6 @@ const SmurfForm = props => {
         name="name"
         placeholder="Smurfy Name"
         value={newSmurf.name}
-        // value={newSmurfName}
         onChange={handleChanges}
       />
       <br/>
@@ -103,8 +76,7 @@ const SmurfForm = props => {
         max="1000"
         name="age"
         placeholder="Age"
-        value={newSmurf.age}
-        // value={newSmurfAge}
+        value={newSmurf.age === 0 ? '' : newSmurf.age}
         onChange={handleChanges}
       />yrs&nbsp;
       <input
@@ -114,36 +86,14 @@ const SmurfForm = props => {
         min="0"
         max="22"
         placeholder="Height"
-        value={newSmurf.height}
-        // value={newSmurfHeight}
+        value={newSmurf.height === 0 ? '' : newSmurf.height}
         onChange={handleChanges}
       />cm
       <br/>
-      <button onClick={()=>{
-        if (newSmurf.name !== '' && newSmurf.age !== '' && newSmurf.height !== '') {
-          props.addSmurf(newSmurf);
-          setNewSmurf(defaultSmurf);
-        }
-        // if (newSmurfName !== '' && newSmurfAge !== '' && newSmurfHeight !== '') {
-        //   let s = newSmurfObject(newSmurfName, newSmurfAge, newSmurfHeight);
-        //   props.addSmurf(s);
-        //   setNewSmurf(defaultSmurf);
-        // }
-      }}>Add&nbsp;Smurf</button>
+      <button onClick={()=>{handleSubmit()}}>Add&nbsp;Smurf</button>
     </div>
   );
+  //#endregion JSX
 };
 
-const mapStateToProps = state => {
-  console.log('SmurfForm mapStateToProps state: ', state);
-  return {
-    isLoading: state.isLoading,
-    error: state.error,
-    smurfData: state.smurfData
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { /*getSmurfData*/ }
-)(SmurfForm);
+export default SmurfForm;

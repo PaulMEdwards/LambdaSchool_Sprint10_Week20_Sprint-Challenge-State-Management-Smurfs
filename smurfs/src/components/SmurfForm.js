@@ -36,6 +36,7 @@ const SmurfForm = (props) => {
     props.addSmurf(newSmurfObject("Smurfette", 205, 5.2));
     props.addSmurf(newSmurfObject("Harmony", 206, 4.7));
     props.addSmurf(newSmurfObject("Sassette", 25, 4.0));
+    // eslint-disable-next-line
   }, []);
   //#endregion useEffect monitor(s)
 

@@ -1,0 +1,70 @@
+.App {
+  text-align: center;
+
+  header {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    .logo {
+      height: 100px;
+    }
+
+    .title {
+      font-size: 1.5em;
+    }
+
+    .Input {
+      input,button {
+        background-color: black;
+        color: darkgrey;
+      }
+      input.inputName {
+        width: 161px;
+      }
+      input.inputAge,input.inputHeight {
+        width: 55px;
+      }
+    }
+  }
+
+  section.Smurf {
+    .smurfDBResults {
+      width: 80%;
+      margin: 0 auto;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 0.5rem;
+
+      .smurf {
+        height: 200px;
+        min-width: 200px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid;
+        border-radius: 5px;
+
+        .name {
+          font-size: 1.5em;
+        }
+        .height,.age {
+          font-size: 1.15em;
+        }
+        .trash {
+          padding-top: 1em;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
